@@ -8,17 +8,45 @@ Explain why your Python environment config is broken.
 
 ## 30-Second Demo
 
-```console
-$ DATABASE_URL=postgres://shell/app envdoctor check examples/basic
+Given a project with:
+
+```dotenv
+# .env
+DB_URL=postgres://localhost/app
+OPENAI_API_KEY=changeme
 ```
 
-`envdoctor` compares your shell, `.env`, `.env.example`, and Python code, then explains the mismatch:
+```python
+# app.py
+import os
 
-- `DATABASE_URL` is required by `app.py`
-- it is missing from `.env`
-- it exists in your shell, so local commands may work while CI/Docker fails
-- `.env` has `DB_URL`, which is probably a typo
-- suggested fix: rename or document the variable source
+DATABASE_URL = os.environ["DATABASE_URL"]
+```
+
+Run:
+
+```console
+$ DATABASE_URL=postgres://shell/app envdoctor check examples/basic
+
+envdoctor check
+===============
+
+Checked:
+  shell environment: available (1/4 expected key(s) found)
+  .env: found (3 key(s))
+  .env.example: found (3 key(s))
+  Python code: 3 env usage(s)
+
+Diagnosis:
+  DATABASE_URL
+    ! Missing value: DATABASE_URL is missing from .env (app.py:3)
+      It is present in your shell environment, so local commands may work while CI or Docker still fails.
+      Suggested fix: Add DATABASE_URL=... to .env or document how CI/Docker should provide it.
+
+  DB_URL
+    ~ Possible typo: DB_URL may be a typo for DATABASE_URL (.env:1)
+      Suggested fix: Rename DB_URL to DATABASE_URL if they represent the same setting.
+```
 
 ## Why
 
