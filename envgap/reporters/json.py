@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from envdoctor.checker import CheckResult
-from envdoctor.model import Finding, Severity
+from envgap.checker import CheckResult
+from envgap.model import Finding, Severity
 
 
 def render_json(result: CheckResult) -> str:

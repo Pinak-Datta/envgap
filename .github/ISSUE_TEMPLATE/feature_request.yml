@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest a new envdoctor capability.
+description: Suggest a new envgap capability.
 title: "[Feature]: "
 labels: ["enhancement"]
 body:
@@ -15,7 +15,7 @@ body:
     id: solution
     attributes:
       label: Proposed behavior
-      description: What should envdoctor report or detect?
+      description: What should envgap report or detect?
     validations:
       required: true
   - type: textarea

@@ -4,8 +4,8 @@ from collections import defaultdict
 from collections import Counter
 from pathlib import Path
 
-from envdoctor.checker import CheckResult
-from envdoctor.model import Finding, Severity
+from envgap.checker import CheckResult
+from envgap.model import Finding, Severity
 
 ICONS = {
     Severity.ERROR: "!",
@@ -37,7 +37,7 @@ def render_terminal(result: CheckResult, strict: bool = False) -> str:
     lines: list[str] = []
     counts = Counter(finding.severity for finding in result.findings)
 
-    lines.append("envdoctor check")
+    lines.append("envgap check")
     lines.append("=" * 15)
     lines.append("")
     lines.append(f"Project: {result.root}")

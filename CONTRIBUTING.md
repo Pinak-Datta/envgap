@@ -1,8 +1,8 @@
 # Contributing
 
-Thanks for helping improve envdoctor.
+Thanks for helping improve envgap.
 
-envdoctor is intentionally a practical diagnostic tool, not a configuration framework. Good contributions make broken environment config easier to understand without adding surprising runtime behavior.
+envgap is intentionally a practical diagnostic tool, not a configuration framework. Good contributions make broken environment config easier to understand without adding surprising runtime behavior.
 
 ## Setup
 
@@ -21,7 +21,7 @@ pytest
 You can also run the sample broken project:
 
 ```console
-envdoctor check examples/basic
+envgap check examples/basic
 ```
 
 ## Good Issues
@@ -31,7 +31,7 @@ The most useful reports include:
 - a small `.env`
 - a small `.env.example`
 - the Python code that reads environment variables
-- the envdoctor output
+- the envgap output
 - what you expected instead
 
 Please redact real API keys, tokens, passwords, and connection strings.

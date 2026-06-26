@@ -3,13 +3,13 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "envdoctor"
+name = "envgap"
 version = "0.1.0"
-description = "Explain why your Python environment config is broken."
+description = "Find the gaps in your Python environment config."
 readme = "README.md"
 requires-python = ">=3.9"
 license = "MIT"
-authors = [{ name = "envdoctor contributors" }]
+authors = [{ name = "envgap contributors" }]
 keywords = ["environment", "dotenv", "configuration", "cli", "diagnostics"]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -28,13 +28,13 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/Pinak-Datta/envdoctor"
-Repository = "https://github.com/Pinak-Datta/envdoctor"
-Issues = "https://github.com/Pinak-Datta/envdoctor/issues"
-Changelog = "https://github.com/Pinak-Datta/envdoctor/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/Pinak-Datta/envgap"
+Repository = "https://github.com/Pinak-Datta/envgap"
+Issues = "https://github.com/Pinak-Datta/envgap/issues"
+Changelog = "https://github.com/Pinak-Datta/envgap/blob/main/CHANGELOG.md"
 
 [project.scripts]
-envdoctor = "envdoctor.cli:main"
+envgap = "envgap.cli:main"
 
 [project.optional-dependencies]
 dev = ["build>=1.2", "pytest>=8.0", "twine>=5.0"]

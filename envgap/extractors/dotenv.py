@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from envdoctor.model import EnvFile, EnvVar
+from envgap.model import EnvFile, EnvVar
 
 KEY_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 

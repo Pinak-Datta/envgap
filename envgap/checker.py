@@ -5,9 +5,9 @@ from dataclasses import dataclass
 from collections.abc import Mapping
 from pathlib import Path
 
-from envdoctor.extractors.dotenv import parse_dotenv
-from envdoctor.extractors.python_ast import scan_python_env_usage
-from envdoctor.model import CodeUsage, EnvFile, ExpectedVar, Finding, Severity
+from envgap.extractors.dotenv import parse_dotenv
+from envgap.extractors.python_ast import scan_python_env_usage
+from envgap.model import CodeUsage, EnvFile, ExpectedVar, Finding, Severity
 
 PLACEHOLDER_VALUES = {
     "",
@@ -115,7 +115,7 @@ def _build_findings(
                 code="missing_example_file",
                 severity=Severity.WARNING,
                 title=".env.example was not found",
-                message="envdoctor could not find a documented source of expected variables.",
+                message="envgap could not find a documented source of expected variables.",
                 path=example.path,
                 suggestion="Add a .env.example file with every environment variable your app expects.",
             )
@@ -127,7 +127,7 @@ def _build_findings(
                 code="missing_env_file",
                 severity=Severity.WARNING,
                 title=".env was not found",
-                message="envdoctor could not compare local values because .env is missing.",
+                message="envgap could not compare local values because .env is missing.",
                 path=actual.path,
                 suggestion="Create .env from .env.example, or pass --env-file for a different file.",
             )

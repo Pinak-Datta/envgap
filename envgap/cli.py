@@ -3,10 +3,10 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from envdoctor import __version__
-from envdoctor.checker import run_check
-from envdoctor.reporters.json import render_json
-from envdoctor.reporters.terminal import render_terminal
+from envgap import __version__
+from envgap.checker import run_check
+from envgap.reporters.json import render_json
+from envgap.reporters.terminal import render_terminal
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -35,9 +35,9 @@ def main(argv: list[str] | None = None) -> int:
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="envdoctor",
-        description="Explain why your Python environment config is broken.",
-        epilog="Start with: envdoctor check",
+        prog="envgap",
+        description="Find the gaps in your Python environment config.",
+        epilog="Start with: envgap check",
     )
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command")

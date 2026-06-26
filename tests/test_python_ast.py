@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from envdoctor.extractors.python_ast import scan_python_env_usage
+from envgap.extractors.python_ast import scan_python_env_usage
 
 
 def test_scan_python_env_usage_classifies_required_and_optional(tmp_path: Path) -> None:

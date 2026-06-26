@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from envdoctor.checker import run_check
+from envgap.checker import run_check
 
 
 def test_run_check_reports_core_findings(tmp_path: Path) -> None:

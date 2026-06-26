@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from envdoctor import __version__
-from envdoctor.cli import main
+from envgap import __version__
+from envgap.cli import main
 
 
 def test_cli_returns_zero_for_clean_project(tmp_path: Path, capsys) -> None:
@@ -69,7 +69,7 @@ def test_cli_version(capsys) -> None:
     output = capsys.readouterr().out
 
     assert exc.value.code == 0
-    assert f"envdoctor {__version__}" in output
+    assert f"envgap {__version__}" in output
 
 
 def test_cli_help_mentions_check_and_no_shell(capsys) -> None:

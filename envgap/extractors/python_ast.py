@@ -3,7 +3,7 @@ from __future__ import annotations
 import ast
 from pathlib import Path
 
-from envdoctor.model import CodeUsage
+from envgap.model import CodeUsage
 
 SKIP_DIRS = {
     ".git",

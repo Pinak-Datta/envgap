@@ -1,16 +1,16 @@
 name: Config false positive
-description: Report a case where envdoctor warns incorrectly.
+description: Report a case where envgap warns incorrectly.
 title: "[False positive]: "
 labels: ["false-positive"]
 body:
   - type: markdown
     attributes:
-      value: False positives are especially useful for keeping envdoctor practical.
+      value: False positives are especially useful for keeping envgap practical.
   - type: textarea
     id: finding
     attributes:
       label: Finding
-      description: Which envdoctor finding seems wrong?
+      description: Which envgap finding seems wrong?
       render: shell
     validations:
       required: true
@@ -18,7 +18,7 @@ body:
     id: expected
     attributes:
       label: Why is it valid in your project?
-      description: Explain the framework pattern, default, alias, or deployment behavior envdoctor missed.
+      description: Explain the framework pattern, default, alias, or deployment behavior envgap missed.
     validations:
       required: true
   - type: textarea

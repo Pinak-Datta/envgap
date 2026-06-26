@@ -1,10 +1,10 @@
-# envdoctor
+# envgap
 
-Explain why your Python environment config is broken.
+Find the gaps in your Python environment config.
 
-`envdoctor` is a diagnostic CLI for Python projects that use `.env` files, `.env.example`, shell variables, and `os.environ` / `os.getenv` in code. It does not load your config. It tells you why your config is drifting, missing, duplicated, undocumented, placeholder-filled, or probably misspelled.
+`envgap` is a diagnostic CLI for Python projects that use `.env` files, `.env.example`, shell variables, and `os.environ` / `os.getenv` in code. It does not load your config. It shows the gaps between what your app expects, what your project documents, and what your environment actually provides.
 
-![envdoctor terminal diagnosis screenshot](docs/assets/envdoctor-terminal.svg)
+![envgap terminal diagnosis screenshot](docs/assets/envgap-terminal.svg)
 
 ## 30-Second Demo
 
@@ -26,9 +26,9 @@ DATABASE_URL = os.environ["DATABASE_URL"]
 Run:
 
 ```console
-$ DATABASE_URL=postgres://shell/app envdoctor check examples/basic
+$ DATABASE_URL=postgres://shell/app envgap check examples/basic
 
-envdoctor check
+envgap check
 ===============
 
 Checked:
@@ -60,12 +60,12 @@ Common examples:
 - A variable works locally only because it is exported in your shell.
 - CI, Docker, or another developer's machine fails because the real required variables are not documented.
 
-`envdoctor` is for that moment when you want the project to explain itself.
+`envgap` is for that moment when you want the project to explain itself.
 
 ## Install
 
 ```console
-pip install envdoctor
+pip install envgap
 ```
 
 From a local checkout:
@@ -79,48 +79,48 @@ pip install -e ".[dev]"
 Run a check in the current project:
 
 ```console
-envdoctor check
+envgap check
 ```
 
 Try the included broken example:
 
 ```console
-envdoctor check examples/basic
+envgap check examples/basic
 ```
 
 Show machine-readable output:
 
 ```console
-envdoctor check --json
+envgap check --json
 ```
 
 Ignore shell variables for deterministic CI checks:
 
 ```console
-envdoctor check --no-shell
+envgap check --no-shell
 ```
 
 Fail on warnings as well as errors:
 
 ```console
-envdoctor check --strict
+envgap check --strict
 ```
 
 `--ci` is supported as a CI-friendly alias for `--strict`:
 
 ```console
-envdoctor check --ci
+envgap check --ci
 ```
 
 Use custom dotenv filenames:
 
 ```console
-envdoctor check --env-file .env.local --example-file .env.example
+envgap check --env-file .env.local --example-file .env.example
 ```
 
 ## What It Checks Today
 
-`envdoctor check` currently inspects:
+`envgap check` currently inspects:
 
 - current shell environment
 - `.env`
@@ -159,31 +159,31 @@ Required vs optional behavior:
 
 | Command | Exit code behavior |
 | --- | --- |
-| `envdoctor check` | exits `1` when errors are present |
-| `envdoctor check --strict` | exits `1` when errors or warnings are present |
-| `envdoctor check --ci` | same as `--strict` |
-| `envdoctor check --json` | same pass/fail behavior, JSON output |
-| `envdoctor check --no-shell` | ignores current shell variables when diagnosing missing keys |
+| `envgap check` | exits `1` when errors are present |
+| `envgap check --strict` | exits `1` when errors or warnings are present |
+| `envgap check --ci` | same as `--strict` |
+| `envgap check --json` | same pass/fail behavior, JSON output |
+| `envgap check --no-shell` | ignores current shell variables when diagnosing missing keys |
 
 Warnings do not fail a normal check unless `--strict` or `--ci` is used.
 
 ## CI
 
 ```yaml
-name: envdoctor
+name: envgap
 
 on: [push, pull_request]
 
 jobs:
-  envdoctor:
+  envgap:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install envdoctor
-      - run: envdoctor check --ci
+      - run: pip install envgap
+      - run: envgap check --ci
 ```
 
 ## Example Diagnosis
@@ -210,7 +210,7 @@ DATABASE_URL = os.environ["DATABASE_URL"]
 DEBUG = os.getenv("DEBUG", "false")
 ```
 
-`envdoctor` can report:
+`envgap` can report:
 
 - `DATABASE_URL` is required in code but missing from `.env`
 - `DB_URL` may be a typo for `DATABASE_URL`
@@ -221,7 +221,7 @@ DEBUG = os.getenv("DEBUG", "false")
 
 `python-dotenv` loads environment variables.
 
-`envdoctor` explains whether the environment variables your app expects match the variables your project defines and documents.
+`envgap` explains whether the environment variables your app expects match the variables your project defines and documents.
 
 The useful question is not only:
 
@@ -274,13 +274,13 @@ pytest
 Run the example locally:
 
 ```console
-envdoctor check examples/basic
+envgap check examples/basic
 ```
 
 Run the shell-aware example:
 
 ```console
-DATABASE_URL=postgres://shell/app envdoctor check examples/basic
+DATABASE_URL=postgres://shell/app envgap check examples/basic
 ```
 
 ## License

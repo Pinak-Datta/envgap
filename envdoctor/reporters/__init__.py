@@ -1,2 +1,0 @@
-"""Render envdoctor check results."""
-

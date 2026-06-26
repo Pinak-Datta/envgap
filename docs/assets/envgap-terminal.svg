@@ -1,6 +1,6 @@
 <svg width="1280" height="760" viewBox="0 0 1280 760" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">envdoctor terminal diagnosis screenshot</title>
-  <desc id="desc">A clean terminal report showing envdoctor explaining missing environment variables, shell drift, and a likely typo.</desc>
+  <title id="title">envgap terminal diagnosis screenshot</title>
+  <desc id="desc">A clean terminal report showing envgap explaining missing environment variables, shell drift, and a likely typo.</desc>
 
   <rect width="1280" height="760" rx="28" fill="#0F172A"/>
   <rect x="48" y="46" width="1184" height="668" rx="18" fill="#111827" stroke="#334155" stroke-width="2"/>
@@ -10,9 +10,9 @@
   <circle cx="88" cy="77" r="9" fill="#F87171"/>
   <circle cx="119" cy="77" r="9" fill="#FBBF24"/>
   <circle cx="150" cy="77" r="9" fill="#34D399"/>
-  <text x="196" y="84" fill="#CBD5E1" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="18">envdoctor check examples/basic</text>
+  <text x="196" y="84" fill="#CBD5E1" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="18">envgap check examples/basic</text>
 
-  <text x="88" y="154" fill="#F8FAFC" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="700">envdoctor check</text>
+  <text x="88" y="154" fill="#F8FAFC" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="700">envgap check</text>
   <text x="88" y="188" fill="#64748B" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="18">===============</text>
 
   <text x="88" y="236" fill="#CBD5E1" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="18">Project: /path/to/project</text>

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from envdoctor.extractors.dotenv import parse_dotenv
+from envgap.extractors.dotenv import parse_dotenv
 
 
 def test_parse_dotenv_values_and_duplicates(tmp_path: Path) -> None:
