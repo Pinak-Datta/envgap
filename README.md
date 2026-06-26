@@ -93,6 +93,12 @@ Try the included broken example:
 envgap check examples/basic
 ```
 
+Try a FastAPI-style settings example:
+
+```console
+envgap check examples/fastapi
+```
+
 Show machine-readable output:
 
 ```console
@@ -282,11 +288,21 @@ Run the example locally:
 envgap check examples/basic
 ```
 
+Run the FastAPI-style example:
+
+```console
+envgap check examples/fastapi
+```
+
 Run the shell-aware example:
 
 ```console
 DATABASE_URL=postgres://shell/app envgap check examples/basic
 ```
+
+## Launch Notes
+
+Release notes and launch post drafts live in [`docs/launch`](docs/launch).
 
 ## License
 
