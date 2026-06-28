@@ -298,6 +298,15 @@ It is:
 
 > What does my app expect, where should it come from, and why is it missing or wrong here?
 
+## How envgap Differs from Other Tools
+
+| Tool | Purpose | How envgap differs |
+|------|---------|--------------------|
+| python-dotenv | Loads `.env` files | envgap diagnoses drift between code, `.env`, `.env.example`, and shell variables. |
+| pydantic-settings | Validates application settings | envgap diagnoses configuration drift instead of validating settings. |
+| django-environ | Reads environment configuration for Django | envgap is framework-independent and diagnoses configuration drift. |
+| Secret scanners | Detect leaked secrets | envgap finds missing or inconsistent configuration rather than exposed secrets. |
+
 ## Current Scope
 
 This is intentionally a small diagnostic tool, not a config framework.
