@@ -335,6 +335,8 @@ See the [full roadmap](docs/ROADMAP.md).
 
 Real-world config examples are the most useful contribution right now.
 
+New contributors can start with [good first issues](https://github.com/Pinak-Datta/envgap/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22), [help wanted issues](https://github.com/Pinak-Datta/envgap/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22), or false positives from their own Python projects.
+
 Good first contributions:
 
 - report a false positive with a tiny redacted example
