@@ -147,3 +147,28 @@ def test_duplicate_keys_in_example_are_reported(tmp_path: Path) -> None:
         and finding.path == tmp_path / ".env.example"
         for finding in result.findings
     )
+
+def test_cfg_abbreviation_is_detected_as_config(tmp_path: Path) -> None:
+    (tmp_path / ".env.example").write_text("APP_CONFIG=\n", encoding="utf-8")
+    (tmp_path / ".env").write_text("APP_CFG=value\n", encoding="utf-8")
+
+    result = run_check(tmp_path, environ={})
+
+    assert any(
+        finding.code == "possible_typo"
+        and finding.title == "APP_CFG may be a typo for APP_CONFIG"
+        for finding in result.findings
+    )
+
+
+def test_pwd_abbreviation_is_detected_as_password(tmp_path: Path) -> None:
+    (tmp_path / ".env.example").write_text("USER_PASSWORD=\n", encoding="utf-8")
+    (tmp_path / ".env").write_text("USER_PWD=secret\n", encoding="utf-8")
+
+    result = run_check(tmp_path, environ={})
+
+    assert any(
+        finding.code == "possible_typo"
+        and finding.title == "USER_PWD may be a typo for USER_PASSWORD"
+        for finding in result.findings
+    )
