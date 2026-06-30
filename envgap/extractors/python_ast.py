@@ -171,9 +171,7 @@ def _settings_env_prefix(node: ast.ClassDef) -> str:
         value = _model_config_value(statement)
         if value is None:
             continue
-        parsed = _config_env_prefix(value)
-        if isinstance(parsed, str):
-            env_prefix = parsed
+        env_prefix = _config_env_prefix(value) or ""
     return env_prefix
 
 
@@ -187,10 +185,7 @@ def _model_config_value(statement: ast.stmt) -> ast.AST | None:
     return None
 
 
-_UNKNOWN_CONFIG = object()
-
-
-def _config_env_prefix(value: ast.AST) -> str | object | None:
+def _config_env_prefix(value: ast.AST) -> str | None:
     if isinstance(value, ast.Call) and _call_name(value.func) in {"SettingsConfigDict", "ConfigDict"}:
         return _string_keyword(value, "env_prefix") or ""
     if isinstance(value, ast.Dict):
@@ -198,7 +193,7 @@ def _config_env_prefix(value: ast.AST) -> str | object | None:
             if key is not None and _string_literal(key) == "env_prefix":
                 return _string_literal(item) or ""
         return ""
-    return _UNKNOWN_CONFIG
+    return None
 
 
 def _settings_field_aliases(value: ast.AST | None) -> list[str]:

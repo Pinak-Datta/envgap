@@ -147,6 +147,6 @@ def test_scan_python_env_usage_supports_common_pydantic_model_config_forms(tmp_p
     assert by_key["DICT_DATABASE_URL"].source == "DictLiteralSettings.database_url (Pydantic BaseSettings)"
     assert by_key["CONFIG_DATABASE_URL"].source == "ConfigDictSettings.database_url (Pydantic BaseSettings)"
     assert by_key["NEW_DATABASE_URL"].source == "OverrideSettings.database_url (Pydantic BaseSettings)"
-    assert by_key["DATABASE_URL"].source == "RemovedPrefixSettings.database_url (Pydantic BaseSettings)"
-    assert by_key["KEEP_DATABASE_URL"].source == "ReferencedConfigSettings.database_url (Pydantic BaseSettings)"
+    assert by_key["DATABASE_URL"].source == "ReferencedConfigSettings.database_url (Pydantic BaseSettings)"
+    assert "KEEP_DATABASE_URL" not in by_key
     assert "OLD_DATABASE_URL" not in by_key
