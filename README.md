@@ -33,6 +33,7 @@ envgap detects Pydantic `BaseSettings` fields, aliases, and env prefixes for Fas
 - [What It Checks Today](#what-it-checks-today)
 - [Exit Codes](#exit-codes)
 - [CI](#ci)
+- [pre-commit](#pre-commit)
 - [Example Diagnosis](#example-diagnosis)
 - [Why Not Just python-dotenv?](#why-not-just-python-dotenv)
 - [Current Scope](#current-scope)
@@ -110,8 +111,22 @@ Common examples:
 
 ## Install
 
+With pip:
+
 ```console
 pip install envgap
+```
+
+With uv:
+
+```console
+uv tool install envgap
+```
+
+With pipx:
+
+```console
+pipx install envgap
 ```
 
 From a local checkout:
@@ -238,6 +253,17 @@ Warnings do not fail a normal check unless `--strict` or `--ci` is used.
 
 ## CI
 
+Minimal GitHub Actions step:
+
+```yaml
+- name: Check environment config drift
+  run: |
+    pip install envgap
+    envgap check --strict
+```
+
+Full workflow:
+
 ```yaml
 name: envgap
 
@@ -253,6 +279,30 @@ jobs:
           python-version: "3.12"
       - run: pip install envgap
       - run: envgap check --ci
+```
+
+## pre-commit
+
+Use envgap as a pre-commit hook to catch config drift before a change lands:
+
+```yaml
+repos:
+  - repo: https://github.com/Pinak-Datta/envgap
+    rev: v0.2.2
+    hooks:
+      - id: envgap
+```
+
+Install pre-commit if you do not already have it:
+
+```console
+pipx install pre-commit
+```
+
+Run it manually:
+
+```console
+pre-commit run envgap --all-files
 ```
 
 ## Example Diagnosis

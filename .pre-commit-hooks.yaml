@@ -1,0 +1,6 @@
+- id: envgap
+  name: envgap
+  description: Find gaps between .env, .env.example, shell variables, and Python code.
+  entry: envgap check
+  language: python
+  pass_filenames: false
