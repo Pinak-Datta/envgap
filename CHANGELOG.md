@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+- Add `uv tool` and `pipx` install instructions.
+- Add a minimal GitHub Actions example for strict envgap checks.
+- Add pre-commit hook metadata and README setup instructions.
+
 ## 0.2.1
 
 - Support Pydantic Settings aliases and validation aliases.
