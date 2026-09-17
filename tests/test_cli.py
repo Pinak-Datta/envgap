@@ -96,3 +96,27 @@ def test_cli_no_shell_ignores_shell_environment(tmp_path: Path, monkeypatch, cap
     assert exit_code == 1
     assert "shell environment: ignored (--no-shell)" in output
     assert "present in your shell environment" not in output
+
+
+def test_cli_reports_docker_compose_summary(tmp_path: Path, capsys) -> None:
+    (tmp_path / ".env.example").write_text("", encoding="utf-8")
+    (tmp_path / ".env").write_text("", encoding="utf-8")
+    (tmp_path / "compose.yml").write_text(
+        "\n".join(
+            [
+                "services:",
+                "  web:",
+                "    environment:",
+                "      API_KEY: ${API_KEY}",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    exit_code = main(["check", str(tmp_path)])
+    output = capsys.readouterr().out
+
+    assert exit_code == 0
+    assert "Docker Compose: found compose.yml (1 env key(s))" in output
+    assert "Compose/documentation drift" in output
+    assert "API_KEY is used by Docker Compose but missing from .env.example" in output

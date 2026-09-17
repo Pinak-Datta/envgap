@@ -10,6 +10,7 @@ Find gaps between `.env`, `.env.example`, shell variables, and Python code.
 `envgap` is a diagnostic CLI for Python projects that use `.env` files, `.env.example`, shell variables, and `os.environ` / `os.getenv` in code. It does not load your config. It shows the gaps between what your app expects, what your project documents, and what your environment actually provides.
 
 envgap detects Pydantic `BaseSettings` fields, aliases, and env prefixes for FastAPI-style projects.
+It also flags Docker Compose environment keys that are missing from `.env.example`.
 
 ![envgap animated terminal demo](https://raw.githubusercontent.com/Pinak-Datta/envgap/main/docs/assets/envgap-demo.gif)
 
@@ -155,6 +156,12 @@ Try a FastAPI-style settings example:
 envgap check examples/fastapi
 ```
 
+Try a Docker Compose drift example:
+
+```console
+envgap check examples/docker-compose
+```
+
 Show machine-readable output:
 
 ```console
@@ -194,6 +201,7 @@ envgap check --env-file .env.local --example-file .env.example
 - `.env.example`
 - Python files using common environment variable APIs
 - Pydantic `BaseSettings` fields used by FastAPI-style settings modules
+- Docker Compose files named `compose.yml`, `compose.yaml`, `docker-compose.yml`, or `docker-compose.yaml`
 
 It detects:
 
@@ -205,6 +213,7 @@ It detects:
 - likely typo pairs like `DB_URL` vs `DATABASE_URL`
 - required env vars used in Python code but missing from `.env.example`
 - required Pydantic settings fields missing from `.env` or `.env.example`
+- Docker Compose environment keys missing from `.env.example`
 - missing `.env`
 - missing `.env.example`
 
@@ -238,6 +247,18 @@ Required vs optional behavior:
 - `BaseSettings` fields with defaults are optional
 - `Field(alias=...)` and `Field(validation_alias=...)` use the configured env name
 - simple `env_prefix` settings are applied to field names
+
+It scans common Docker Compose environment patterns:
+
+```yaml
+services:
+  web:
+    env_file:
+      - .env.docker
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: redis://redis:6379/0
+```
 
 ## Exit Codes
 
@@ -370,6 +391,7 @@ In scope now:
 - shell environment
 - Python `os.environ` / `os.getenv` scanning
 - Pydantic `BaseSettings` field, alias, and env prefix detection
+- Docker Compose `environment` and safe project-local `env_file` detection
 - terminal and JSON reports
 - CI-friendly exit codes
 
@@ -377,7 +399,7 @@ Not in scope yet:
 
 - loading or mutating your environment
 - validating every framework-specific settings edge case
-- Docker Compose parsing
+- full Docker Compose YAML validation or interpolation precedence modeling
 - GitHub Actions secrets parsing
 - dynamic Pydantic settings config and nested settings
 
@@ -385,7 +407,7 @@ Not in scope yet:
 
 - dynamic Pydantic settings config and nested settings
 - Django settings helper detection
-- Docker Compose env detection
+- deeper Docker Compose precedence explanations
 - GitHub Actions env/secrets detection
 - precedence explanations for shell vs `.env` vs framework defaults
 - GitHub Actions annotations
@@ -427,6 +449,12 @@ Run the FastAPI-style example:
 
 ```console
 envgap check examples/fastapi
+```
+
+Run the Docker Compose example:
+
+```console
+envgap check examples/docker-compose
 ```
 
 Run the shell-aware example:

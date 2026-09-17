@@ -26,6 +26,7 @@ def render_json(result: CheckResult) -> str:
             "warnings": sum(1 for finding in result.findings if finding.severity == Severity.WARNING),
             "expected_keys": len(result.expected_keys),
             "code_usages": len(result.code_usages),
+            "compose_usages": len(result.compose_usages),
         },
         "findings": [_finding_to_dict(finding, result.root) for finding in result.findings],
         "code_usages": [
@@ -38,6 +39,18 @@ def render_json(result: CheckResult) -> str:
             }
             for usage in result.code_usages
         ],
+        "compose": {
+            "files": [_relative(path, result.root) for path in result.compose_files],
+            "usages": [
+                {
+                    "key": usage.key,
+                    "path": _relative(usage.path, result.root),
+                    "line": usage.line,
+                    "source": usage.source,
+                }
+                for usage in result.compose_usages
+            ],
+        },
     }
     return json.dumps(payload, indent=2, sort_keys=True)
 
