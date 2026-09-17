@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "envgap"
-version = "0.2.2"
+version = "0.3.0"
 description = "Find the gaps in your Python environment config."
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"

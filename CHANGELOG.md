@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0
 
 - Detect common Docker Compose `environment` and `env_file` variables.
 - Report Docker Compose environment keys that are missing from `.env.example`.
