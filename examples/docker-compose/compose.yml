@@ -1,0 +1,8 @@
+services:
+  web:
+    env_file:
+      - .env.docker
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: redis://redis:6379/0
+      WORKER_QUEUE: default

@@ -21,6 +21,7 @@ SEVERITY_ORDER = {
 
 DIAGNOSIS_LABELS = {
     "code_missing_from_example": "Code/documentation drift",
+    "compose_missing_from_example": "Compose/documentation drift",
     "duplicate_key": "Duplicate key",
     "empty_value": "Empty value",
     "missing_env_file": "Missing source",
@@ -46,6 +47,7 @@ def render_terminal(result: CheckResult, strict: bool = False) -> str:
     lines.append(f"  .env: {_dotenv_summary(result.env_path, len(result.env_file.vars))}")
     lines.append(f"  .env.example: {_dotenv_summary(result.example_path, len(result.example_file.vars))}")
     lines.append(f"  Python code: {len(result.code_usages)} env usage(s)")
+    lines.append(f"  Docker Compose: {_compose_summary(result)}")
     lines.append("")
 
     if not result.findings:
@@ -124,6 +126,13 @@ def _dotenv_summary(path: Path, count: int) -> str:
     if not path.exists():
         return "not found"
     return f"found ({count} key(s))"
+
+
+def _compose_summary(result: CheckResult) -> str:
+    if not result.compose_files:
+        return "not found"
+    file_names = ", ".join(path.name for path in result.compose_files)
+    return f"found {file_names} ({len(result.compose_usages)} env key(s))"
 
 
 def _shell_summary(result: CheckResult) -> str:

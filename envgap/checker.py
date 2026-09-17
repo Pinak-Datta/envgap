@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from collections.abc import Mapping
 from pathlib import Path
 
+from envgap.extractors.compose import find_compose_files, scan_compose_env_usage
 from envgap.extractors.dotenv import parse_dotenv
 from envgap.extractors.python_ast import scan_python_env_usage
 from envgap.model import CodeUsage, EnvFile, ExpectedVar, Finding, Severity
@@ -43,6 +44,8 @@ class CheckResult:
     include_shell: bool
     expected_keys: set[str]
     code_usages: list[CodeUsage]
+    compose_files: list[Path]
+    compose_usages: list[CodeUsage]
     findings: list[Finding]
 
     @property
@@ -68,8 +71,10 @@ def run_check(
     example = parse_dotenv(example_path)
     shell_env = dict(os.environ if environ is None else environ) if include_shell else {}
     code_usages = scan_python_env_usage(root)
+    compose_files = find_compose_files(root)
+    compose_usages = scan_compose_env_usage(root)
     expected = _expected_vars(example, code_usages)
-    findings = _build_findings(actual, example, expected, code_usages, shell_env, include_shell)
+    findings = _build_findings(actual, example, expected, code_usages, compose_usages, shell_env, include_shell)
 
     return CheckResult(
         root=root,
@@ -81,6 +86,8 @@ def run_check(
         include_shell=include_shell,
         expected_keys=set(expected),
         code_usages=code_usages,
+        compose_files=compose_files,
+        compose_usages=compose_usages,
         findings=findings,
     )
 
@@ -99,6 +106,7 @@ def _build_findings(
     example: EnvFile,
     expected: dict[str, ExpectedVar],
     code_usages: list[CodeUsage],
+    compose_usages: list[CodeUsage],
     shell_env: dict[str, str],
     include_shell: bool,
 ) -> list[Finding]:
@@ -212,6 +220,7 @@ def _build_findings(
             )
         )
 
+    findings.extend(_compose_missing_from_example_findings(compose_usages, example_keys))
     findings.extend(_typo_findings(actual_keys, expected_keys, actual))
     findings.extend(_parse_warning_findings(actual))
     findings.extend(_parse_warning_findings(example))
@@ -255,6 +264,30 @@ def _typo_findings(actual_keys: set[str], expected_keys: set[str], actual: EnvFi
                         suggestion=f"Rename {actual_key} to {expected_key} if they represent the same setting.",
                     )
                 )
+    return findings
+
+
+def _compose_missing_from_example_findings(usages: list[CodeUsage], example_keys: set[str]) -> list[Finding]:
+    findings: list[Finding] = []
+    first_usage_by_key: dict[str, CodeUsage] = {}
+    for usage in usages:
+        if usage.key not in example_keys:
+            first_usage_by_key.setdefault(usage.key, usage)
+
+    for key, usage in sorted(first_usage_by_key.items()):
+        findings.append(
+            Finding(
+                code="compose_missing_from_example",
+                severity=Severity.WARNING,
+                title=f"{key} is used by Docker Compose but missing from .env.example",
+                message=f"{key} is declared in Docker Compose config but is not documented in .env.example.",
+                key=key,
+                path=usage.path,
+                line=usage.line,
+                suggestion=f"Add {key}=... to .env.example, or remove it from Compose if it is not app config.",
+                details=_usage_details([usage]),
+            )
+        )
     return findings
 
 
@@ -331,10 +364,13 @@ def _env_file_status(key: str, env_file: EnvFile) -> str:
 
 
 def _usage_details(usages: list[CodeUsage]) -> list[str]:
-    return [
-        f"{usage.path}:{usage.line}: {usage.source} ({'required' if usage.required else 'optional'})"
-        for usage in usages
-    ]
+    details: list[str] = []
+    for usage in usages:
+        if usage.source.startswith("Docker Compose"):
+            details.append(f"{usage.path}:{usage.line}: {usage.source}")
+        else:
+            details.append(f"{usage.path}:{usage.line}: {usage.source} ({'required' if usage.required else 'optional'})")
+    return details
 
 
 def _is_placeholder(value: str) -> bool:

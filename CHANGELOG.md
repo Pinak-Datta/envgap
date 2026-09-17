@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Detect common Docker Compose `environment` and `env_file` variables.
+- Report Docker Compose environment keys that are missing from `.env.example`.
+- Add a Docker Compose drift example project.
+
 ## 0.2.2
 
 - Add `uv tool` and `pipx` install instructions.

@@ -10,7 +10,7 @@ envgap should stay small, practical, and diagnostic. The goal is to explain envi
 - Convert field names such as `database_url` to `DATABASE_URL`.
 - Add a FastAPI/Pydantic example project.
 
-## v0.3: Deployment Drift
+## In Progress: v0.3 Deployment Drift
 
 - Detect Docker Compose `environment` and `env_file` usage.
 - Explain local `.env` vs Docker-provided env differences.
@@ -26,6 +26,7 @@ envgap should stay small, practical, and diagnostic. The goal is to explain envi
 
 ## Later
 
+- Deeper Docker Compose precedence explanations.
 - Richer JSON schema for editor integrations.
 - Config file for project-specific ignores.
 - More precise typo matching with fewer false positives.
