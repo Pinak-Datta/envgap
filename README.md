@@ -309,7 +309,7 @@ Use envgap as a pre-commit hook to catch config drift before a change lands:
 ```yaml
 repos:
   - repo: https://github.com/Pinak-Datta/envgap
-    rev: v0.2.2
+    rev: v0.3.0
     hooks:
       - id: envgap
 ```
